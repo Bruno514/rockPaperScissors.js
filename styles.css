@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+div.score {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 18%;
+  margin-top: 2%;
+  margin-right: 18%;
+}
+
+.score .points {
+  color:blue;
+  font-size: 4rem;
+  font-family: 'Edu NSW ACT Foundation', cursive;
+}
+
+.info {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+  font-family: 'Edu NSW ACT Foundation', cursive;
+}
+
+.message {
+  border: .2rem grey solid;
+  background-color: black;
+  color: white;
+}
+
+.game-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20%;
+  margin-top: 5%;
+  margin-right: 20%;
+}
+
+.button {
+  background-color: grey;
+  transition: all 0.3s ease-in-out;
+}
+
+.button#rock{
+  transition: all 0.1s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.button#rock:hover {
+  transform: scale(2.2);
+}
+
+#point-you {
+  color: blue;
+}
+
+#point-pc {
+  color: red;
+}

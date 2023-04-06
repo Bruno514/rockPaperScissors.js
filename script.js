@@ -6,54 +6,84 @@ function getComputerChoice() {
   return compChoice;
 }
 
-function playRound(yourChoice, computerChoice) {
+function addAllListeners() {
+  const buttons = document.querySelectorAll(".button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", playRound);
+  });
+}
+
+function removeAllListeners() {
+  const buttons = document.querySelectorAll(".button");
+  buttons.forEach((button) => {
+    button.removeEventListener("click", playRound);
+  });
+}
+
+function changeButtonsBgToDefault() {
+  const buttons = document.querySelectorAll(".button");
+  buttons.forEach((button) => {
+    button.style["background-color"] = "grey";
+  });
+}
+
+function playRound() {
+  let result = "";
+  const msg_e = document.querySelector(".message");
+  const yourChoice = this["id"];
+  const computerChoice = getComputerChoice();
+  const yourPoints = document.querySelector("#point-you");
+  const computerPoints = document.querySelector("#point-pc");
+
+  changeButtonsBgToDefault();
+
+  if (yourChoice != computerChoice) {
+    computerChoiceButton = document.querySelector("#" + computerChoice);
+    this.style["background-color"] = "blue";
+    computerChoiceButton.style["background-color"] = "red";
+  } else {
+    this.style["background-color"] = "orange";
+  }
   // Check winner
   if (yourChoice == computerChoice) {
-    return "it's a draw";
+    result = "It's a draw";
   } else if (
     (yourChoice == "rock" && computerChoice == "scissors") ||
     (yourChoice == "scissors" && computerChoice == "paper") ||
     (yourChoice == "paper" && computerChoice == "rock")
-  )
-    return "you won";
-  else return "computer won";
-}
-
-function game() {
-  let playerWins = 0;
-  let computerWins = 0;
-  let round = 1;
-
-  while (round <= 5) {
-    let yourChoice = prompt(
-      "What is choice for rock/paper/scissors?"
-    ).toLowerCase();
-    let compChoice = getComputerChoice();
-
-    let result = playRound(yourChoice, compChoice);
-    if (result == "you won") {
-      playerWins += 1;
-    } else if (result == "computer won") {
-      computerWins += 1;
-    }
-
-    console.log(`Player: ${playerWins}  Computer: ${computerWins}`);
-    console.log("Computer chose " + compChoice);
-    console.log("Round: " + round + " || " + result);
-    console.log(" ");
-
-    if (round == 5) {
-      if (playerWins > computerWins) {
-        console.log("Player won the game.");
-      } else if (computerWins == 3) {
-        console.log("Computer won the game. Nice try human.");
-      } else {
-        console.log("It's a draw between you two.");
-      }
-    }
-
-    round += 1;
+  ) {
+    playerWins += 1;
+    result = "You won this round.";
+  } else {
+    computerWins += 1;
+    result = "The computer won this round";
+    msg_e.textContent = "The computer won this round.";
   }
+
+  if (playerWins == 5) {
+    result = "Player won the game.";
+    this.removeEventListener("click", playRound);
+    removeAllListeners();
+  } else if (computerWins == 5) {
+    result = "The computer won the game. Nice try human.";
+    removeAllListeners();
+  }
+
+  yourPoints.textContent = "You: " + playerWins;
+  computerPoints.textContent = "Computer: " + computerWins;
+  msg_e.textContent = result;
 }
 
-game();
+let playerWins = 0;
+let computerWins = 0;
+let round = 0;
+rockButton = document.querySelector(".button#rock");
+
+rockButton.addEventListener("mouseover", () => {
+  rockAudio = document.querySelector("audio");
+  if (!rockAudio) return;
+  rockAudio.currentTime = 0;
+  rockAudio.play();
+});
+
+addAllListeners();
